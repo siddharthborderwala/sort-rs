@@ -1,2 +1,6 @@
-/target
+# dependency-relted
 Cargo.lock
+
+# build related
+/target
+/build
