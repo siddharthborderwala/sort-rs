@@ -92,30 +92,32 @@ pub fn merge_sort<T: PartialOrd + Copy>(list: &mut [T]) {
   list.copy_from_slice(&result);
 }
 
-fn partition<T: PartialOrd + Copy>(list: &mut [T], from: usize, to: usize) -> usize {
-  let pivot = list[to];
-  let mut i = from - 1;
+fn partition<T: PartialOrd + Copy>(list: &mut [T], left_most: i32, right_most: i32) -> i32 {
+  let pivot = list[right_most as usize];
+  let mut i = left_most - 1;
+  let rm_usize = right_most as usize;
+  let lm_usize = left_most as usize;
 
-  for j in from..to {
+  for j in lm_usize..(rm_usize + 1) {
     if list[j] < pivot {
       i += 1;
-      list.swap(i, j);
+      list.swap(i as usize, j);
     }
   }
-  list.swap(i + 1, to);
+  list.swap((i + 1) as usize, rm_usize);
   return i + 1;
 }
 
-fn recursive_quick_sort<T: PartialOrd + Copy>(list: &mut [T], from: usize, to: usize) {
-  if from < to {
-    let p_index = partition(list, from, to - 1);
-    recursive_quick_sort(list, from, p_index - 1);
-    recursive_quick_sort(list, p_index + 1, to);
+fn recursive_quick_sort<T: PartialOrd + Copy>(list: &mut [T], left_most: i32, right_most: i32) {
+  if left_most < right_most {
+    let p_index = partition(list, left_most, right_most);
+    recursive_quick_sort(list, left_most, p_index - 1);
+    recursive_quick_sort(list, p_index + 1, right_most);
   }
 }
 
 pub fn quick_sort<T: PartialOrd + Copy>(list: &mut [T]) {
-  recursive_quick_sort(list, 0, list.len());
+  recursive_quick_sort(list, 0, list.len() as i32 - 1);
 }
 
 #[cfg(test)]
