@@ -1,0 +1,15 @@
+[package]
+name = "sort-rs"
+version = "0.1.0"
+authors = ["Siddharth Borderwala <siddharthborderwala@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "sort"
+path = "src/lib.rs"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[dependencies]
